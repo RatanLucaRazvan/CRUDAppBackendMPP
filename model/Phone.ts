@@ -3,12 +3,14 @@ import { uuid } from "uuidv4";
 
 export class Phone{
     id: string;
+    processorId: string;
     name: string;
     price: number;
     prodYear: number;
     description: string;
-    constructor(id: string, name: string, price: number, prodYear: number, description: string){
+    constructor(id: string, processorId: string, name: string, price: number, prodYear: number, description: string){
         this.id = id;
+        this.processorId = processorId
         this.name = name;
         this.price = price;
         this.prodYear = prodYear;
@@ -16,7 +18,7 @@ export class Phone{
     }
 }
 
-let phones = [new Phone(v4(), "Iphone", 2000, 2010, "Good phone")];
+let phones: Phone[] = [];
 
 export let phoneNamesToChoose = ["Samsung", "Nothing", "IPhone 6", "iPhone 7", "Xioami Mi 7"]
 export let pricesToChoose = [4000, 3000, 2000, 2500, 3700];

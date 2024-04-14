@@ -6,6 +6,19 @@ import { uuid } from "uuidv4";
 import { v4 } from "uuid";
 import http from 'http';
 import { Server as SocketIOServer } from 'socket.io';
+import addPhone from "./controller/addPhone";
+import getAllPhones from "./controller/getAllPhones";
+import getPhoneById from "./controller/getPhoneById";
+import updatePhone from "./controller/updatePhone";
+import deletePhone from "./controller/deletePhone";
+import addProcessor from "./controller/addProcessor";
+import getAllProcessors from "./controller/getAllProcessors";
+import getProcessorById from "./controller/getProcessorById";
+import updateProcessor from "./controller/updateProcessor";
+import { Client } from "pg";
+import client from "./database";
+
+
 
 dotenv.config();
 
@@ -20,6 +33,8 @@ app.use(cors());
 const port = process.env.NODE_ENV === 'test' ? 0 : process.env.PORT || 3000;
 
 const server = http.createServer(app);
+
+
 
 // const io = new SocketIOServer(server, {
 //     cors: {
@@ -43,58 +58,55 @@ const server = http.createServer(app);
 //         });
 // });
 
-app.post("/", (req, res) => {
-    const newPhoneData = req.body;
-    const newPhone = new Phone(v4(), newPhoneData.name, newPhoneData.price, newPhoneData.prodYear, newPhoneData.description);
-    phones.push(newPhone);
-    // res.status(201).send("Phone added succesfully"); 
-    res.status(201).json(newPhone);   
-})
+
+app.post("/phones", addPhone);
 
 
 // Get all
-app.get("/", (req, res) => {
-    res.status(200).json(phones);
-});
+app.get("/phones", getAllPhones);
+
 
 // Get one
-app.get("/:id", (req, res) => {
-    const id = req.params.id;
-    const phone = phones.find((p) => p.id === id);
-    if(!phone){
-        return res.status(404).json({message: "Phone does not exist"});
+app.get("/phones/:id", getPhoneById);
+
+
+app.patch("/phones/:id", updatePhone);
+
+app.delete("/phones/:id", deletePhone);
+
+
+app.get("/processors", getAllProcessors);
+
+app.get("/processors/:id", getProcessorById);
+
+app.post("/processors", addProcessor);
+
+app.patch("/processors/:id", updateProcessor);
+
+const config = {
+    database: 'MPPDatabase',
+    server: 'DESKTOP-GIKO44L\\SQLEXPRESS',
+    user: 'DESKTOP-GIKO44L\\RatanLuca',
+    password: '',
+    options: {
+      trustedConnection: true,
+      trustServerCertificate: true
     }
-    res.status(200).json(phone);
-})
+}
 
 
-app.patch("/:id", (req, res) => {
-    const id = req.params.id;
-    const updatesData = req.body;
-    const phone = phones.find((p) => p.id === id);
-    if(!phone){
-        return res.status(404).json({message: "Phone does not exist"});
-    }
-    Object.assign(phone, updatesData);
-    res.status(200).json(phone);
-})
 
-app.delete("/:id", (req, res) => {
-    const id = req.params.id;
-    // const phone = phones.find((p) => p.id === id);
-    const index = phones.findIndex(b => b.id === id);
-    if(index == -1){
-        return res.status(404).json({message: "Phone does not exist"});
-    }
-    // phones = phones.filter((p) => p.id !== id);
-    // updatePhones(getPhones().filter((p) => p.id !== id));
-    // console.log(phones);
-    phones.splice(index, 1);
-    res.status(204).send();
-})
-
+// client.query(`Select * from processors`, (err, res) => {
+//     if(!err){
+//         console.log(res.rows);
+//     } else{
+//         console.log(err.message);
+//     }
+//     client.end;
+// })
 
 server.listen(port, () => {
+  client.connect();
   console.group();
   console.log(`Server started at port ${port}`);
   console.groupEnd();
