@@ -9,7 +9,7 @@ const addPhone = (req: Request, res: Response) => {
     // client.connect()
     // .then(() => {
     const query = `INSERT INTO phones(id, price, name, prodYear, description, processorID) VALUES ($1, $2, $3, $4, $5, $6)`;
-    const values = [newPhone.id, newPhone.price, newPhone.name, newPhone.prodYear, newPhone.processorId];
+    const values = [newPhone.id, newPhone.price, newPhone.name, newPhone.prodYear, newPhone.description, newPhone.processorId];
 
     client.query(query, values)
     .then(() => {

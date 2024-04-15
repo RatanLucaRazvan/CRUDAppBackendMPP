@@ -12,7 +12,7 @@ beforeAll(() => {
 describe("Test Delete Phone", () => {
     test("Delete phone with good id", (done) => {
       request(app)
-        .delete("/2")
+        .delete("/phones/2")
         .then((response) => {
           expect(response.status).toBe(204);
           done();
@@ -20,7 +20,7 @@ describe("Test Delete Phone", () => {
     });
     test("Delete phone with bad id", (done) => {
         request(app)
-          .delete("/10")
+          .delete("/phones/10")
           .then((response) => {
             expect(response.status).toBe(404);
             expect(response.body.message).toBe("Phone does not exist");

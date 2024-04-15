@@ -7,7 +7,7 @@ import client from "../database";
 const deletePhone = (req: Request, res: Response) => {
     const id = req.params.id;
     // const phone = phones.find((p) => p.id === id);
-    const index = phones.findIndex(b => b.id === id);
+    const index = phones.findIndex(p => p.id === id);
     if(index == -1){
         return res.status(404).json({message: "Phone does not exist"});
     }

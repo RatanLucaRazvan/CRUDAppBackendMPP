@@ -17,6 +17,7 @@ import getProcessorById from "./controller/getProcessorById";
 import updateProcessor from "./controller/updateProcessor";
 import { Client } from "pg";
 import client from "./database";
+import deleteProcessor from "./controller/deleteProcessor";
 
 
 
@@ -74,6 +75,8 @@ app.patch("/phones/:id", updatePhone);
 
 app.delete("/phones/:id", deletePhone);
 
+app.delete("/processors/:id", deleteProcessor);
+
 
 app.get("/processors", getAllProcessors);
 
@@ -82,17 +85,6 @@ app.get("/processors/:id", getProcessorById);
 app.post("/processors", addProcessor);
 
 app.patch("/processors/:id", updateProcessor);
-
-const config = {
-    database: 'MPPDatabase',
-    server: 'DESKTOP-GIKO44L\\SQLEXPRESS',
-    user: 'DESKTOP-GIKO44L\\RatanLuca',
-    password: '',
-    options: {
-      trustedConnection: true,
-      trustServerCertificate: true
-    }
-}
 
 
 

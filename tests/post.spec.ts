@@ -13,7 +13,7 @@ afterAll(() => {
 describe("Test Add Phone", () => {
   test("Test Add Phone", (done) => {
     request(app)
-      .post("/")
+      .post("/phones")
       .send({
         id: 4,
         name: "IPhone 6",

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import phones from "../model/Phone";
+import phones, { Phone } from "../model/Phone";
 import client from "../database";
 
 const getAllPhones = (req: Request, res: Response) => {
@@ -9,7 +9,8 @@ const getAllPhones = (req: Request, res: Response) => {
     .then(result => {
         phones.length = 0;
         result.rows.forEach((row: any) => {
-            phones.push(row);
+            const phone = new Phone(row.id, row.processorid, row.name, row.price, row.prodyear, row.description);
+            phones.push(phone);
           });
         res.status(200).json(phones);
     })

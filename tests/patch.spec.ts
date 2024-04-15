@@ -12,7 +12,7 @@ beforeAll(() => {
   describe("Test Patch Phoens", () => {
     test("Test edit name", (done) => {
       request(app)
-        .patch("/2")
+        .patch("/phones/2")
         .send({
             name: "IPhone 6"
         })
@@ -24,7 +24,7 @@ beforeAll(() => {
     });
     test("Test 404 code", (done) => {
         request(app)
-          .patch("/10")
+          .patch("/phones/10")
           .send({
               name: "IPhone 6"
           })

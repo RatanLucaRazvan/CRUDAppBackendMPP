@@ -13,7 +13,7 @@ afterAll(() => {
 describe("Test Get Phone By Id", () => {
   test("Test Get wuth good Id", (done) => {
     request(app)
-      .get("/2")
+      .get("/phones/2")
       .then((response) => {
         expect(response.status).toBe(200);
         expect(response.body.name).toBe("Samsung Galaxy S3");
@@ -25,7 +25,7 @@ describe("Test Get Phone By Id", () => {
   });
   test("Test Get with bad Id", (done) => {
     request(app)
-      .get("/10")
+      .get("/phones/10")
       .then((response) => {
         expect(response.status).toBe(404);
         expect(response.body.message).toBe("Phone does not exist");
