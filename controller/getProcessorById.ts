@@ -6,10 +6,10 @@ import client from "../database";
 
 const getProcessorById = (req: Request, res: Response) => {
     const id = req.params.id;
-    // const processor = processors.find((p) => p.id === id);
-    // if(!processor){
-    //     return res.status(404).json({message: "Processor does not exist"});
-    // }
+    const processor = processors.find((p) => p.id === id);
+    if(!processor){
+        return res.status(404).json({message: "Processor does not exist"});
+    }
     // res.status(200).json(processor);
     const query = "SELECT * FROM processors WHERE id=$1";
     const values = [id];

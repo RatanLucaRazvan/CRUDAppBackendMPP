@@ -8,6 +8,26 @@ beforeAll(() => {
   afterAll(() => {
     app.close();
   })
+
+
+describe("Test Delete Processor", () => {
+  test("Delete processor with good id", (done) => {
+    request(app)
+    .delete("/processors/1")
+    .then((response) => {
+      expect(response.status).toBe(204);
+      done();
+    });
+  });
+  test("Delete processor with bad id", (done) => {
+    request(app)
+    .delete("/processors/10")
+    .then((response) => {
+      expect(response.status).toBe(404);
+      done();
+    })
+  })
+})
   
 describe("Test Delete Phone", () => {
     test("Delete phone with good id", (done) => {
