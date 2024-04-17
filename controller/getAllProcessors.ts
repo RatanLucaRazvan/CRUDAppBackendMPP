@@ -5,8 +5,19 @@ import client from "../database";
 
 
 const getAllProcessors = (req: Request, res: Response) => {
-    const query = "SELECT * FROM processors";
+    let query = "SELECT * FROM processors";
 
+    if(req.query.id){
+        query += ` ORDER BY id ${req.query.id}`;
+    } else if(req.query.name){
+        query += ` ORDER BY name ${req.query.name}`;
+    } else if(req.query.prodYear){
+        query += ` ORDER BY prodyear ${req.query.prodYear}`;
+    } else if(req.query.speed){
+        query += ` ORDER BY speed ${req.query.speed}`;
+    }
+
+    console.log(query);
     client.query(query)
     .then(result => {
         processors.length = 0;

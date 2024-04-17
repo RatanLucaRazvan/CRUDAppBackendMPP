@@ -18,6 +18,7 @@ import updateProcessor from "./controller/updateProcessor";
 import { Client } from "pg";
 import client from "./database";
 import deleteProcessor from "./controller/deleteProcessor";
+import processors, { Processor } from "./model/Processor";
 
 
 
@@ -45,9 +46,32 @@ const server = http.createServer(app);
 //   });
 
 // io.on("connection", (socket) => {
+//         const newProcessor = new Processor(v4(), "A1 bionic", 2004, "low");
+//         const query = `INSERT INTO processors(id, name, prodyear, speed) VALUES ($1, $2, $3, $4)`;
+//         const values = [newProcessor.id, newProcessor.name, newProcessor.prodYear, newProcessor.speed];
+//         client.query(query, values)
+//         .then(() => {
+//             console.log("Processor added to database");
+//             processors.push(newProcessor);
+//         })
+//         .catch(err => {
+//             console.error("Error executing query", err.message);
+//         });
+//         const newProcessorString = JSON.stringify(newProcessor);
+//         socket.emit("processor", newProcessorString);
 //         const interval = setInterval(() => {
-//                 const newPhone = {id: v4(), name: phoneNamesToChoose[getRandomInteger(0, phoneNamesToChoose.length - 1)], price: pricesToChoose[getRandomInteger(0, pricesToChoose.length - 1)], prodYear: prodYearsToChoose[getRandomInteger(0, prodYearsToChoose.length - 1)], description: descriptionsToChoose[getRandomInteger(0, descriptionsToChoose.length - 1)]};
+//                 const newPhone = {id: v4(), processorId: newProcessor.id, name: phoneNamesToChoose[getRandomInteger(0, phoneNamesToChoose.length - 1)], price: pricesToChoose[getRandomInteger(0, pricesToChoose.length - 1)], prodYear: prodYearsToChoose[getRandomInteger(0, prodYearsToChoose.length - 1)], description: descriptionsToChoose[getRandomInteger(0, descriptionsToChoose.length - 1)]};
 //                 phones.push(newPhone);
+//                 const query = `INSERT INTO phones(id, price, name, prodYear, description, processorID) VALUES ($1, $2, $3, $4, $5, $6)`;
+//                 const values = [newPhone.id, newPhone.price, newPhone.name, newPhone.prodYear, newPhone.description, newPhone.processorId];
+//                 client.query(query, values)
+//                 .then(() => {
+//                     console.log("Phone added to database");
+//                     phones.push(newPhone);
+//                 })
+//                 .catch(err => {
+//                     console.error("Error executing query", err.message);
+//                 });
 //                 const newPhoneString = JSON.stringify(newPhone);
 //                 console.log("Am trimis");
 //                 socket.emit("phone", newPhoneString);

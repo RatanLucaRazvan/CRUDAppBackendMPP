@@ -8,8 +8,8 @@ const updatePhone = (req: Request, res: Response) => {
     const id = req.params.id;
     const updatesData = req.body;
 
-    const query = `UPDATE phones SET price=$1, name=$2, prodYear=$3, description=$4, processorid=$5 WHERE id=$6`;
-    const values = [updatesData.price, updatesData.name, updatesData.prodYear, updatesData.description, updatesData.processorID, id];
+    const query = `UPDATE phones SET price=$1, name=$2, prodYear=$3, description=$4 WHERE id=$5`;
+    const values = [updatesData.price, updatesData.name, updatesData.prodYear, updatesData.description, id];
     const phone = phones.find((p) => p.id === id);
     if(!phone){
         return res.status(404).json({message: "Phone does not exist"});

@@ -47,8 +47,7 @@ beforeAll(() => {
           name: "IPhone 6",
           price: 2000,
           prodYear: 2015,
-          description: "Good Phone",
-          processorID: 'processorID2'
+          description: "Good Phone"
         })
         .then((response) => {
           expect(response.status).toBe(200);

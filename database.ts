@@ -1,29 +1,8 @@
 import { Client, Query } from "pg";
 import PGMock2 from "pgmock2";
+import dotenv from "dotenv";
 
-// class MockClient{
-//     public queries: Query[];
-
-//     constructor() {
-//       this.queries = [];
-//     }
-
-//       public async connect(): Promise<void> {
-//     // Simulate the behavior of connecting to a database
-//     return new Promise<void>((resolve, reject) => {
-//       console.log('MockClient connected to database');
-//       resolve();
-//     });
-//   }
-  
-//     public async query(queryString: string, values: any[] = []): Promise<void> {
-//       // Simulate the behavior of a successful query
-//       return new Promise<void>((resolve, reject) => {
-//         this.queries.push( new Query(queryString, values) );
-//         resolve();
-//       });
-//     }
-// }
+dotenv.config();
 const mockClient = new PGMock2();
 mockClient.add('INSERT INTO phones(id, price, name, prodYear, description, processorID) VALUES ($1, $2, $3, $4, $5, $6)', ['string', 'number', 'string', 'number', 'string', 'string'], {
     rowCount: 0,
@@ -67,7 +46,7 @@ mockClient.add('SELECT * FROM processors WHERE id=$1', ['string'], {
         {id: '1', name: 'Kirin', prodyear: 2015, speed: 'high'}
     ]
 })
-mockClient.add('UPDATE phones SET price=$1, name=$2, prodYear=$3, description=$4, processorid=$5 WHERE id=$6', ['number', 'string', 'number', 'string', 'string', 'string'], {
+mockClient.add('UPDATE phones SET price=$1, name=$2, prodYear=$3, description=$4 WHERE id=$5', ['number', 'string', 'number', 'string', 'string'], {
     rowCount: 0,
     rows: []
 })
@@ -75,13 +54,13 @@ mockClient.add('UPDATE processors SET name=$1, prodYear=$2, speed=$3 WHERE id=$4
     rowCount: 0,
     rows: []
 })
-// const port = process.env.NODE_ENV === 'test' ? 0 : process.env.PORT || 3000;
+
 const client = process.env.NODE_ENV === 'test' ? mockClient : new Client({
-    host: "localhost",
-    user: "postgres",
-    port: 5432,
-    password: "patru#raton03",
-    database: "MPPDatabase"
+    host: process.env.LOCALHOST,
+    user: process.env.USER_DATABASE,
+    port: parseInt(process.env.DATABASE_PORT!),
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE
 })
 
 

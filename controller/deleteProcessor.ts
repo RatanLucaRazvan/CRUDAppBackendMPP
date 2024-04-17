@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import processors from "../model/Processor";
 import client from "../database";
+import phones from "../model/Phone";
 
 
 
@@ -17,6 +18,11 @@ const deleteProcessor = (req: Request, res: Response) => {
     client.query(query, values)
     .then(() => {
         console.log("Processor deleted from database");
+        for (let i = phones.length - 1; i >= 0; i--) {
+            if (phones[i].processorId == id) {
+              phones.splice(i, 1); // Remove the element at index i
+            }
+        }
         processors.splice(index, 1);
         res.status(204).send();
     })
