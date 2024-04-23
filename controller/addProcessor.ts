@@ -5,6 +5,7 @@ import client from "../database";
 
 
 const addProcessor = (req: Request, res: Response) => {
+    console.log("PROCESOR ADAUGAT");
     const newProcessorData = req.body;
     const newProcessor = new Processor(v4(), newProcessorData.name, newProcessorData.prodYear, newProcessorData.speed);
     const query = `INSERT INTO processors(id, name, prodyear, speed) VALUES ($1, $2, $3, $4)`;

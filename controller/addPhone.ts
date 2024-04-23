@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 import client from "../database";
 
 const addPhone = (req: Request, res: Response) => {
+    console.log("TELEFON ADAUGAT")
     const newPhoneData = req.body;
     const newPhone = new Phone(v4(), newPhoneData.processorId, newPhoneData.name, newPhoneData.price, newPhoneData.prodYear, newPhoneData.description);
     // client.connect()

@@ -17,6 +17,10 @@ const getAllProcessors = (req: Request, res: Response) => {
         query += ` ORDER BY speed ${req.query.speed}`;
     }
 
+    if(req.query.page && req.query.count){
+        query += ` LIMIT ${req.query.count} OFFSET ${req.query.page}`;
+    }
+    
     console.log(query);
     client.query(query)
     .then(result => {

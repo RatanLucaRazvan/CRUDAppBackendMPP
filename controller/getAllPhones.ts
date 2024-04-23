@@ -4,6 +4,7 @@ import client from "../database";
 
 const getAllPhones = (req: Request, res: Response) => {
     let query = "SELECT * FROM phones";
+    const {page, offset} = req.query;
 
     if(req.query.id){
         query += ` ORDER BY id ${req.query.id}`;
@@ -17,6 +18,10 @@ const getAllPhones = (req: Request, res: Response) => {
         query += ` ORDER BY prodyear ${req.query.prodYear}`;
     } else if(req.query.descrpition){
         query += ` ORDER BY description ${req.query.description}`;
+    }
+
+    if(req.query.page && req.query.count){
+        query += ` LIMIT ${req.query.count} OFFSET ${req.query.page}`;
     }
     console.log(query);
     client.query(query)
