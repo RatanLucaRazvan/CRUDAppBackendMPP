@@ -19,9 +19,8 @@ import { Client } from "pg";
 import client from "./database";
 import deleteProcessor from "./controller/deleteProcessor";
 import processors, { Processor } from "./model/Processor";
-import restorePhones from "./controller/restorePhones";
-import restoreProcessors from "./controller/restoreProcessors";
 import getNumberOfPhones from "./controller/getNumberOfPhones";
+import syncFrontData from "./controller/syncFrontData";
 
 
 
@@ -87,8 +86,7 @@ const server = http.createServer(app);
 
 app.post("/phones", addPhone);
 
-app.post("/restorephones", restorePhones);
-app.post("/restoreprocessors", restoreProcessors);
+app.post("/syncfrontdata", syncFrontData);
 
 
 // Get all
