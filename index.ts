@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express, NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import phones, { Phone, descriptionsToChoose, phoneNamesToChoose, pricesToChoose, prodYearsToChoose } from "./model/Phone";
 import cors from "cors";
@@ -21,6 +21,10 @@ import deleteProcessor from "./controller/deleteProcessor";
 import processors, { Processor } from "./model/Processor";
 import getNumberOfPhones from "./controller/getNumberOfPhones";
 import syncFrontData from "./controller/syncFrontData";
+import loginUser from "./controller/loginUser";
+import registerUser from "./controller/registerUser";
+import getDetails from "./controller/getDetails";
+import jwt, { JwtPayload } from "jsonwebtoken"
 
 
 
@@ -29,6 +33,9 @@ function getRandomInteger(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+interface AuthRequest extends Request{
+  user?: JwtPayload
+}
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -106,6 +113,15 @@ app.delete("/phones/:id", deletePhone);
 app.delete("/processors/:id", deleteProcessor);
 
 
+
+app.get("/accountdetails", authenticateToken, (req: AuthRequest, res) => {
+  console.log(typeof(req.user))
+  console.log(req.user);
+  res.json(req.user);
+});
+
+app.get("/login", loginUser);
+
 app.get("/processors", getAllProcessors);
 
 app.get("/processors/:id", getProcessorById);
@@ -115,6 +131,22 @@ app.post("/processors", addProcessor);
 app.patch("/processors/:id", updateProcessor);
 
 
+app.post("/register", registerUser);
+
+
+function authenticateToken(req: AuthRequest, res: Response, next: NextFunction){
+  const authHeader = req.headers['authorization']
+  console.log(req.header)
+  const token = authHeader && authHeader.split(' ')[1];
+  console.log(token)
+  if(token == null) return res.sendStatus(401)
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!, (err, user) => {
+    if(err) return res.sendStatus(403)
+    req.user = user as JwtPayload;
+    next()
+  })
+}
 
 // client.query(`Select * from processors`, (err, res) => {
 //     if(!err){

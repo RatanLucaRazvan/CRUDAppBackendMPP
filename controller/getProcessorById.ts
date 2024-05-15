@@ -16,7 +16,7 @@ const getProcessorById = (req: Request, res: Response) => {
 
     client.query(query, values)
     .then(result => {
-            const processor = new Processor(result.rows[0].id, result.rows[0].name, result.rows[0].prodyear, result.rows[0].speed);
+            const processor = new Processor(result.rows[0].id, result.rows[0].name, result.rows[0].prodyear, result.rows[0].speed, result.rows[0].userid);
             res.status(200).json(processor);
     })
     .catch(err => {

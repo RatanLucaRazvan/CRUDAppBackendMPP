@@ -22,7 +22,7 @@ mockClient.add('DELETE FROM processors WHERE id=$1', ['string'], {
     rowCount: 0,
     rows: []
 })
-mockClient.add('SELECT * FROM phones', [], {
+mockClient.add('SELECT * FROM phones WHERE processorid=$1', ['string'], {
     rowCount: 1,
     rows: [
         {id: '1', price: 20, name: 'IPhone', prodyear: 2003, description: 'good', processorID: 'processor1'}

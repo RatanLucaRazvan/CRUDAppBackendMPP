@@ -33,7 +33,7 @@ const syncFrontData = (req: Request, res: Response) => {
         .then(result => {
             processors.length = 0;
             result.rows.forEach((row: any) => {
-                const processor = new Processor(row.id, row.name, row.prodyear, row.speed);
+                const processor = new Processor(row.id, row.name, row.prodyear, row.speed, row.userid);
                 processors.push(processor);
             });
             res.status(200).json(processors);
